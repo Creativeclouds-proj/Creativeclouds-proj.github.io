@@ -1,1 +1,228 @@
+/* --- Variables for Theme Colors --- */
+:root {
+    --sky-blue: #87CEEB; /* Light Sky Blue */
+    --cloud-white: #FFFFFF;
+    --navy-blue: #1E90FF; /* Primary Dark Blue for text/buttons */
+    --gold: #FFD700; /* Gold for score/highlight */
+    --shadow-light: rgba(0, 0, 0, 0.1);
+}
 
+/* --- Base Styles and Background --- */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, var(--sky-blue) 0%, #ADD8E6 100%); /* Blue gradient background */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Header and Title --- */
+.cloud-header {
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    background-color: var(--cloud-white);
+    box-shadow: 0 4px 6px var(--shadow-light);
+    color: var(--navy-blue);
+    margin-bottom: 20px;
+    border-bottom: 5px solid var(--navy-blue);
+}
+
+.cloud-header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px var(--shadow-light);
+}
+
+/* --- Game Container and Score --- */
+.game-container {
+    width: 95%;
+    max-width: 1200px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white card */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.score-panel {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--cloud-white);
+    box-shadow: inset 0 0 10px var(--shadow-light);
+}
+
+#current-score {
+    color: var(--gold);
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+/* --- Game Board Grid --- */
+.board {
+    display: grid;
+    /* Sets the number of columns based on how many categories there are */
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- Category Headings --- */
+.category-header {
+    background-color: var(--navy-blue);
+    color: var(--cloud-white);
+    padding: 15px 5px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    text-transform: uppercase;
+    font-size: 1.1em;
+}
+
+/* --- Question Tiles --- */
+.question-tile {
+    background-color: var(--cloud-white);
+    color: var(--navy-blue);
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+    border-radius: 0 0 8px 8px;
+    border: 3px solid var(--navy-blue);
+    user-select: none; /* Prevent text selection */
+}
+
+.question-tile:hover {
+    background-color: #f0f8ff; /* Lighter hover color */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for questions that have already been clicked */
+.question-tile.answered {
+    background-color: #A9A9A9; /* Darker gray for used tiles */
+    color: #555;
+    cursor: default;
+    pointer-events: none; /* Disables clicks */
+    font-size: 1.5em; /* Smaller font for visual distinction */
+    text-decoration: line-through;
+}
+
+/* --- Reusable Button Styles --- */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.1s;
+    background-color: var(--navy-blue);
+    color: var(--cloud-white);
+    margin: 5px;
+}
+
+.btn:hover {
+    background-color: #00BFFF; /* Deep Sky Blue on hover */
+    transform: scale(1.05);
+}
+
+/* --- Modal Styles (Popup for the Question) --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    z-index: 100; /* Stays on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6); /* Semi-transparent black overlay */
+}
+
+.modal-content {
+    background-color: var(--cloud-white);
+    margin: 15% auto; /* Centered vertically and horizontally */
+    padding: 30px;
+    border: 8px solid var(--navy-blue);
+    width: 80%;
+    max-width: 600px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.modal-content h3 {
+    color: var(--navy-blue);
+}
+
+.modal-content h4 {
+    color: var(--gold);
+    font-size: 1.5em;
+}
+
+#answer-input {
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 2px solid var(--sky-blue);
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Feedback messages */
+.feedback {
+    margin-top: 15px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 20px; /* Ensure space is allocated */
+}
+
+.feedback.correct {
+    background-color: #D4EDDA; /* Light green */
+    color: #155724; /* Dark green text */
+    border: 1px solid #C3E6CB;
+}
+
+.feedback.incorrect {
+    background-color: #F8D7DA; /* Light red */
+    color: #721C24; /* Dark red text */
+    border: 1px solid #F5C6CB;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .board {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on smaller devices */
+    }
+    .cloud-header h1 {
+        font-size: 1.8em;
+    }
+    .question-tile {
+        font-size: 1.5em;
+    }
+}

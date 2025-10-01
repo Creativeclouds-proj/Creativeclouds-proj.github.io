@@ -73,7 +73,7 @@
     <!-- Question Modal -->
     <div id="questionModal" class="fixed inset-0 w-full h-full flex items-center justify-center hidden">
         <div class="modal-content w-11/12 md:w-3/4 lg:w-1/2 h-auto md:h-3/4 p-8 rounded-lg shadow-2xl flex flex-col text-center relative">
-            <h2 id="question-category" class="text-2xl font-bold jeopardy-gold uppercase mb-4">Category</h2>
+            <h2 id="question-category" class="text-2xl font-bold jeopardy-gold uppercase mb-4">Name That Cloud</h2>
             <div class="flex-grow flex items-center justify-center">
                 <p id="question-text" class="text-3xl md:text-5xl font-bold leading-tight"></p>
             </div>
@@ -99,7 +99,6 @@
             const gameBoard = document.getElementById('game-board');
             const scoreDisplay = document.getElementById('score');
             const questionModal = document.getElementById('questionModal');
-            const questionCategory = document.getElementById('question-category');
             const questionText = document.getElementById('question-text');
             const answerSection = document.getElementById('answer-section');
             const answerText = document.getElementById('answer-text');
@@ -116,7 +115,7 @@
             // --- GAME DATA ---
             const gameData = [
                 {
-                    category: "CIRRUS",
+                    category: "Cirrus",
                     clues: [
                         { points: 100, question: "SHAPE: Thin, wispy, and feathery, sometimes with a hooked look called 'mare's tails'.", answer: "Cirrus" },
                         { points: 200, question: "WEATHER: Usually indicates fair weather but can also be the first sign of an approaching storm.", answer: "Cirrus" },
@@ -124,7 +123,7 @@
                     ]
                 },
                 {
-                    category: "CUMULUS",
+                    category: "Cumulus",
                     clues: [
                         { points: 100, question: "SHAPE: Puffy and like cotton balls, with flat bases and distinct outlines.", answer: "Cumulus" },
                         { points: 200, question: "WEATHER: Known as 'fair weather' clouds, they dot the sky on sunny days.", answer: "Cumulus" },
@@ -132,7 +131,7 @@
                     ]
                 },
                 {
-                    category: "STRATUS",
+                    category: "Stratus",
                     clues: [
                         { points: 100, question: "SHAPE: A gray, featureless, horizontal layer that can cover the entire sky.", answer: "Stratus" },
                         { points: 200, question: "WEATHER: Often brings overcast days with light drizzle or light snow.", answer: "Stratus" },
@@ -140,7 +139,7 @@
                     ]
                 },
                 {
-                    category: "CUMULONIMBUS",
+                    category: "Cumulonimbus",
                     clues: [
                         { points: 100, question: "SHAPE: A towering, dense cloud with a flat, spreading top known as an 'anvil'.", answer: "Cumulonimbus" },
                         { points: 200, question: "WEATHER: The king of storm clouds, it brings thunderstorms, heavy rain, and hail.", answer: "Cumulonimbus" },
@@ -148,7 +147,7 @@
                     ]
                 },
                  {
-                    category: "NIMBOSTRATUS",
+                    category: "Nimbostratus",
                     clues: [
                         { points: 100, question: "SHAPE: A thick, dark gray, and featureless sheet that covers the sky.", answer: "Nimbostratus" },
                         { points: 200, question: "WEATHER: Produces steady, continuous light-to-moderate rain or snow.", answer: "Nimbostratus" },
@@ -156,7 +155,7 @@
                     ]
                 },
                 {
-                    category: "ALTOCUMULUS",
+                    category: "Altocumulus",
                     clues: [
                         { points: 100, question: "SHAPE: White or grayish patches, often in layers or waves, looking like fish scales.", answer: "Altocumulus" },
                         { points: 200, question: "WEATHER: Seeing them on a warm morning can signal thunderstorms later in the day.", answer: "Altocumulus" },
@@ -164,7 +163,7 @@
                     ]
                 },
                 {
-                    category: "ALTOSTRATUS",
+                    category: "Altostratus",
                     clues: [
                         { points: 100, question: "SHAPE: A uniform grayish or bluish sheet that partly or totally covers the sky.", answer: "Altostratus" },
                         { points: 200, question: "WEATHER: Often forms ahead of a storm that will produce continuous rain or snow.", answer: "Altostratus" },
@@ -172,7 +171,7 @@
                     ]
                 },
                 {
-                    category: "CIRROCUMULUS",
+                    category: "Cirrocumulus",
                     clues: [
                         { points: 100, question: "SHAPE: Small, white patches arranged in ripples, creating a 'mackerel sky'.", answer: "Cirrocumulus" },
                         { points: 200, question: "WEATHER: They don't produce rain but can indicate a change in weather is coming.", answer: "Cirrocumulus" },
@@ -180,7 +179,7 @@
                     ]
                 },
                 {
-                    category: "CIRROSTRATUS",
+                    category: "Cirrostratus",
                     clues: [
                         { points: 100, question: "SHAPE: A thin, transparent, sheet-like cloud that can cover the entire sky.", answer: "Cirrostratus" },
                         { points: 200, question: "WEATHER: Its presence often indicates that rain will arrive within 24 hours.", answer: "Cirrostratus" },
@@ -188,7 +187,7 @@
                     ]
                 },
                 {
-                    category: "STRATOCUMULUS",
+                    category: "Stratocumulus",
                     clues: [
                         { points: 100, question: "SHAPE: Low, lumpy layers or patches of clouds with blue sky visible between them.", answer: "Stratocumulus" },
                         { points: 200, question: "WEATHER: Usually doesn't bring precipitation, or at most, some light drizzle.", answer: "Stratocumulus" },
@@ -219,7 +218,6 @@
                         clueDiv.dataset.question = clue.question;
                         clueDiv.dataset.answer = clue.answer;
                         clueDiv.dataset.points = clue.points;
-                        clueDiv.dataset.category = cat.category;
                         clueDiv.addEventListener('click', handleClueClick);
                         gameBoard.appendChild(clueDiv);
                     });
@@ -233,9 +231,8 @@
                 activeClueElement = target;
                 currentPoints = parseInt(target.dataset.points);
 
-                questionCategory.textContent = target.dataset.category;
                 questionText.textContent = target.dataset.question;
-                answerText.textContent = `What is ${target.dataset.category}?`; // Correctly formats the answer
+                answerText.textContent = `What is ${target.dataset.answer}?`;
 
                 questionModal.classList.remove('hidden');
                 answerSection.classList.add('hidden');

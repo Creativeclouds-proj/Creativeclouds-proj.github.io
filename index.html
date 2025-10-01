@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Trivia Challenge - Jeopardy Style</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="script.js"> 
+</head>
+<body>
 
+    <header class="cloud-header">
+        <h1>☁️ Cloud Computing Challenge 🌩️</h1>
+    </header>
+
+    <main class="game-container">
+        <div id="game-board" class="board">
+            <p>Loading the challenge board...</p>
+        </div>
+        
+        <div id="score-board" class="score-panel">
+            <h2>Current Score: <span id="current-score">0</span></h2>
+            <button id="reset-button" class="btn">Restart Game</button>
+        </div>
+    </main>
+
+    <div id="question-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-category"></h3>
+            <h4 id="modal-value"></h4>
+            <p id="modal-question"></p>
+            
+            <input type="text" id="answer-input" placeholder="Your Answer (Type 'Yes' or 'No' for Boolean)">
+            <button id="submit-answer-btn" class="btn">Submit Answer</button>
+
+            <div id="feedback-message" class="feedback"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

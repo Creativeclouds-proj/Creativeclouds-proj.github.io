@@ -11,6 +11,7 @@
             font-family: 'Inter', sans-serif;
             background: linear-gradient(to bottom, #87CEEB 0%, #ADD8E6 100%); /* Sky Blue Gradient */
             color: #001f3f; /* Dark Navy Text */
+            overflow: hidden; /* Hide scrollbars from clouds */
         }
         /* Cloud-like cards */
         .jeopardy-blue {
@@ -39,52 +40,225 @@
             font-weight: 700;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
-        #questionModal {
-             background-color: rgba(0, 0, 0, 0.5); /* Darker overlay for readability */
+        #questionModal, #finalRoundModal {
+             background-color: rgba(0, 0, 0, 0.5);
              transition: opacity 0.3s ease-in-out;
         }
         .modal-content {
             background-color: #f0f8ff; /* AliceBlue */
             border: 2px solid white;
-            color: #003366; /* Dark blue text inside modal */
+            color: #003366;
             transition: transform 0.3s ease-in-out;
         }
-        /* Make answer and category text yellow in modal for consistency */
         #answer-text {
              color: #ffc72c;
              text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
-        /* Animation for modal appearing */
-        #questionModal:not(.hidden) .modal-content {
-            transform: scale(1);
-        }
-        #questionModal.hidden .modal-content {
+        .modal-content {
             transform: scale(0.95);
         }
+        .modal-container:not(.hidden) .modal-content {
+            transform: scale(1);
+        }
+        /* Final Round Styles */
+        #final-inputs-container input {
+            border: 2px solid #ADD8E6;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            width: 100%;
+        }
+        #final-inputs-container input.correct {
+            border-color: #10B981; /* Emerald-500 */
+            background-color: #D1FAE5; /* Emerald-100 */
+        }
+         #final-inputs-container input.incorrect {
+            border-color: #EF4444; /* Red-500 */
+            background-color: #FEE2E2; /* Red-100 */
+        }
+        
+        /* Animated Clouds Background */
+        #startScreen {
+            background: #87CEEB;
+            background: -moz-linear-gradient(top,  #87CEEB 0%, #ADD8E6 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#87CEEB), color-stop(100%,#ADD8E6));
+            background: -webkit-linear-gradient(top,  #87CEEB 0%,#ADD8E6 100%);
+            background: -o-linear-gradient(top,  #87CEEB 0%,#ADD8E6 100%);
+            background: -ms-linear-gradient(top,  #87CEEB 0%,#ADD8E6 100%);
+            background: linear-gradient(to bottom,  #87CEEB 0%,#ADD8E6 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87CEEB', endColorstr='#ADD8E6',GradientType=0 );
+        }
+
+        .cloud {
+            background: #fff;
+            background: -moz-linear-gradient(top,  #fff 5%, #f1f1f1 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,#fff), color-stop(100%,#f1f1f1));
+            background: -webkit-linear-gradient(top,  #fff 5%,#f1f1f1 100%);
+            border-radius: 100px;
+            box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+            height: 120px;
+            position: absolute;
+            width: 350px;
+        }
+
+        .cloud:after, .cloud:before {
+            background: #fff;
+            content: '';
+            position: absolute;
+            z-index: -1;
+        }
+
+        .cloud:after {
+            border-radius: 100px;
+            height: 100px;
+            left: 50px;
+            top: -50px;
+            width: 100px;
+        }
+
+        .cloud:before {
+            border-radius: 200px;
+            width: 180px;
+            height: 180px;
+            right: 50px;
+            top: -90px;
+        }
+
+        .x1 {
+            top: 50px;
+            animation: moveclouds 20s linear infinite;
+        }
+
+        .x2 {
+            top: 150px;
+            left: 200px;
+            transform: scale(0.6);
+            opacity: 0.6;
+            animation: moveclouds 30s linear infinite;
+        }
+
+        .x3 {
+            top: 250px;
+            left: -200px;
+            transform: scale(0.8);
+            opacity: 0.8;
+            animation: moveclouds 25s linear infinite;
+        }
+
+        .x4 {
+            top: 350px;
+            left: 400px;
+            transform: scale(0.75);
+            opacity: 0.75;
+            animation: moveclouds 18s linear infinite;
+        }
+        
+        .x5 {
+            top: 450px;
+            left: -150px;
+            transform: scale(0.8);
+            opacity: 0.8;
+            animation: moveclouds 22s linear infinite;
+        }
+
+
+        @keyframes moveclouds {
+            0% {margin-left: 100%;}
+            100% {margin-left: -100%;}
+        }
+
+        /* Stick Figure Styles */
+        #stick-figure-container {
+            position: absolute;
+            width: 80px;
+            height: 100px;
+            cursor: pointer;
+            z-index: 20;
+            transition: top 0.3s ease-in-out, left 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        #stick-figure {
+            animation: idle-sway 3s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        @keyframes idle-sway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        #speech-bubble {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            color: #003366;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none; /* So it doesn't block clicks */
+        }
+        #speech-bubble.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        #speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0 10px;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-2 md:p-4">
+    
+    <!-- Start Screen -->
+    <div id="startScreen" class="fixed inset-0 flex flex-col items-center justify-center z-50 transition-opacity duration-1000">
+        <div class="cloud x1"></div>
+        <div class="cloud x2"></div>
+        <div class="cloud x3"></div>
+        <div class="cloud x4"></div>
+        <div class="cloud x5"></div>
+        <div class="text-center text-white z-10 animate-fade-in-up">
+            <h1 class="text-5xl sm:text-7xl font-black uppercase tracking-widest" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.2);">Cloud Jeopardy</h1>
+            <button id="start-game-button" class="mt-8 bg-white/30 hover:bg-white/50 text-white font-bold py-3 px-10 rounded-full text-2xl transition-all duration-300 shadow-lg transform active:scale-95 backdrop-blur-sm">Start Game</button>
+        </div>
+    </div>
+
 
     <!-- Game Header -->
-    <header class="w-full max-w-7xl text-center mb-6">
+    <header id="game-header" class="w-full max-w-7xl text-center mb-6 hidden opacity-0 transition-opacity duration-500">
         <h1 class="text-4xl md:text-6xl font-black jeopardy-gold uppercase tracking-widest" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">Cloud Jeopardy</h1>
         <div class="mt-4 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 bg-white/30 backdrop-blur-sm p-3 rounded-lg shadow-lg">
             <div class="flex items-center">
                 <span class="text-xl font-bold mr-2">Score:</span>
                 <span id="score" class="text-3xl font-black transition-colors duration-300">$0</span>
             </div>
-            <button id="reset-button" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-md transition-all duration-200 shadow-md transform active:scale-95">New Game</button>
+            <div class="relative">
+                 <button id="reset-button" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-md transition-all duration-200 shadow-md transform active:scale-95">New Game</button>
+            </div>
         </div>
     </header>
 
     <!-- Jeopardy Board -->
-    <main id="game-board" class="grid grid-cols-5 lg:grid-cols-10 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
-        <!-- Categories and clues will be injected here by JavaScript -->
+    <main id="game-board" class="grid grid-cols-5 lg:grid-cols-10 gap-1 md:gap-2 w-full max-w-7xl mx-auto hidden opacity-0 transition-opacity duration-500">
+        <!-- Columns will be injected here by JavaScript -->
     </main>
     
     <!-- Question Modal -->
-    <div id="questionModal" class="fixed inset-0 w-full h-full flex items-center justify-center hidden opacity-0">
-        <div class="modal-content w-11/12 md:w-3/4 lg:w-1/2 h-auto md:h-3/4 p-8 rounded-lg shadow-2xl flex flex-col text-center relative transform scale-95">
+    <div id="questionModal" class="modal-container fixed inset-0 w-full h-full flex items-center justify-center hidden opacity-0">
+        <div class="modal-content w-11/12 md:w-3/4 lg:w-1/2 h-auto md:h-3/4 p-8 rounded-lg shadow-2xl flex flex-col text-center relative">
             <h2 id="question-category" class="text-2xl font-bold jeopardy-gold uppercase mb-4">Name That Cloud</h2>
             <div class="flex-grow flex items-center justify-center">
                 <p id="question-text" class="text-3xl md:text-5xl font-bold leading-tight"></p>
@@ -105,10 +279,45 @@
         </div>
     </div>
 
+    <!-- Final Round Modal -->
+    <div id="finalRoundModal" class="modal-container fixed inset-0 w-full h-full flex items-center justify-center hidden opacity-0">
+        <div class="modal-content w-11/12 md:w-3/4 max-w-4xl p-8 rounded-lg shadow-2xl flex flex-col text-center relative">
+            <h2 class="text-3xl font-bold jeopardy-gold uppercase mb-4">Final Round!</h2>
+            <p class="text-lg mb-6">The board is clear! Now, can you name the 10 mystery cloud categories?</p>
+            <div id="final-inputs-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-6">
+                <!-- Inputs will be generated here -->
+            </div>
+            <div id="final-results-container" class="text-left hidden">
+                 <h3 class="text-xl font-bold text-center mb-4">Results:</h3>
+            </div>
+            <button id="submit-guesses-button" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-md text-lg transition transform active:scale-95 w-full md:w-auto mx-auto">Submit Guesses</button>
+        </div>
+    </div>
+    
+    <!-- Stick Figure NPC -->
+    <div id="stick-figure-container" class="hidden opacity-0">
+        <svg id="stick-figure" viewBox="0 0 80 100">
+            <!-- Head -->
+            <circle cx="40" cy="20" r="15" fill="none" stroke="#003366" stroke-width="4"/>
+            <!-- Body -->
+            <line x1="40" y1="35" x2="40" y2="70" stroke="#003366" stroke-width="4"/>
+            <!-- Arms -->
+            <line x1="40" y1="50" x2="20" y2="60" stroke="#003366" stroke-width="4"/>
+            <line x1="40" y1="50" x2="60" y2="60" stroke="#003366" stroke-width="4"/>
+            <!-- Legs -->
+            <line x1="40" y1="70" x2="25" y2="95" stroke="#003366" stroke-width="4"/>
+            <line x1="40" y1="70" x2="55" y2="95" stroke="#003366" stroke-width="4"/>
+        </svg>
+        <div id="speech-bubble">You can do it!</div>
+    </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const startScreen = document.getElementById('startScreen');
+            const startGameButton = document.getElementById('start-game-button');
             const gameBoard = document.getElementById('game-board');
+            const gameHeader = document.getElementById('game-header');
             const scoreDisplay = document.getElementById('score');
             const questionModal = document.getElementById('questionModal');
             const questionCategory = document.getElementById('question-category');
@@ -120,112 +329,73 @@
             const incorrectBtn = document.getElementById('incorrect-button');
             const closeModalBtn = document.getElementById('close-modal');
             const resetButton = document.getElementById('reset-button');
+            const finalRoundModal = document.getElementById('finalRoundModal');
+            const finalInputsContainer = document.getElementById('final-inputs-container');
+            const submitGuessesBtn = document.getElementById('submit-guesses-button');
+            const stickFigureContainer = document.getElementById('stick-figure-container');
+            const speechBubble = document.getElementById('speech-bubble');
 
             let score = 0;
             let currentPoints = 0;
             let activeClueElement = null;
+            let answeredQuestions = 0;
+            const TOTAL_QUESTIONS = 30;
 
-            // --- GAME DATA ---
-            const gameData = [
-                {
-                    category: "Cirrus",
-                    clues: [
-                        { points: 100, question: "SHAPE: Thin, wispy, and feathery, sometimes with a hooked look called 'mare's tails'.", answer: "Cirrus" },
-                        { points: 200, question: "WEATHER: Usually indicates fair weather but can also be the first sign of an approaching storm.", answer: "Cirrus" },
-                        { points: 300, question: "CHARACTERISTIC: These high-altitude clouds are made entirely of ice crystals.", answer: "Cirrus" }
-                    ]
-                },
-                {
-                    category: "Cumulus",
-                    clues: [
-                        { points: 100, question: "SHAPE: Puffy and like cotton balls, with flat bases and distinct outlines.", answer: "Cumulus" },
-                        { points: 200, question: "WEATHER: Known as 'fair weather' clouds, they dot the sky on sunny days.", answer: "Cumulus" },
-                        { points: 300, question: "CHARACTERISTIC: They are formed by rising warm air currents, a process called convection.", answer: "Cumulus" }
-                    ]
-                },
-                {
-                    category: "Stratus",
-                    clues: [
-                        { points: 100, question: "SHAPE: A gray, featureless, horizontal layer that can cover the entire sky.", answer: "Stratus" },
-                        { points: 200, question: "WEATHER: Often brings overcast days with light drizzle or light snow.", answer: "Stratus" },
-                        { points: 300, question: "CHARACTERISTIC: When this low-level cloud forms on the ground, it's called fog.", answer: "Stratus" }
-                    ]
-                },
-                {
-                    category: "Cumulonimbus",
-                    clues: [
-                        { points: 100, question: "SHAPE: A towering, dense cloud with a flat, spreading top known as an 'anvil'.", answer: "Cumulonimbus" },
-                        { points: 200, question: "WEATHER: The king of storm clouds, it brings thunderstorms, heavy rain, and hail.", answer: "Cumulonimbus" },
-                        { points: 300, question: "CHARACTERISTIC: This is the only cloud that produces both lightning and thunder.", answer: "Cumulonimbus" }
-                    ]
-                },
-                 {
-                    category: "Nimbostratus",
-                    clues: [
-                        { points: 100, question: "SHAPE: A thick, dark gray, and featureless sheet that covers the sky.", answer: "Nimbostratus" },
-                        { points: 200, question: "WEATHER: Produces steady, continuous light-to-moderate rain or snow.", answer: "Nimbostratus" },
-                        { points: 300, question: "CHARACTERISTIC: Its name comes from 'nimbus,' the Latin word for rain.", answer: "Nimbostratus" }
-                    ]
-                },
-                {
-                    category: "Altocumulus",
-                    clues: [
-                        { points: 100, question: "SHAPE: White or grayish patches, often in layers or waves, looking like fish scales.", answer: "Altocumulus" },
-                        { points: 200, question: "WEATHER: Seeing them on a warm morning can signal thunderstorms later in the day.", answer: "Altocumulus" },
-                        { points: 300, question: "CHARACTERISTIC: These mid-level clouds are made of a mix of water droplets and ice crystals.", answer: "Altocumulus" }
-                    ]
-                },
-                {
-                    category: "Altostratus",
-                    clues: [
-                        { points: 100, question: "SHAPE: A uniform grayish or bluish sheet that partly or totally covers the sky.", answer: "Altostratus" },
-                        { points: 200, question: "WEATHER: Often forms ahead of a storm that will produce continuous rain or snow.", answer: "Altostratus" },
-                        { points: 300, question: "CHARACTERISTIC: The sun is often visible through it as if seen through ground glass.", answer: "Altostratus" }
-                    ]
-                },
-                {
-                    category: "Cirrocumulus",
-                    clues: [
-                        { points: 100, question: "SHAPE: Small, white patches arranged in ripples, creating a 'mackerel sky'.", answer: "Cirrocumulus" },
-                        { points: 200, question: "WEATHER: They don't produce rain but can indicate a change in weather is coming.", answer: "Cirrocumulus" },
-                        { points: 300, question: "CHARACTERISTIC: These are high-altitude clouds composed of ice crystals and are relatively rare.", answer: "Cirrocumulus" }
-                    ]
-                },
-                {
-                    category: "Cirrostratus",
-                    clues: [
-                        { points: 100, question: "SHAPE: A thin, transparent, sheet-like cloud that can cover the entire sky.", answer: "Cirrostratus" },
-                        { points: 200, question: "WEATHER: Its presence often indicates that rain will arrive within 24 hours.", answer: "Cirrostratus" },
-                        { points: 300, question: "CHARACTERISTIC: This cloud is famous for creating a halo effect around the sun or moon.", answer: "Cirrostratus" }
-                    ]
-                },
-                {
-                    category: "Stratocumulus",
-                    clues: [
-                        { points: 100, question: "SHAPE: Low, lumpy layers or patches of clouds with blue sky visible between them.", answer: "Stratocumulus" },
-                        { points: 200, question: "WEATHER: Usually doesn't bring precipitation, or at most, some light drizzle.", answer: "Stratocumulus" },
-                        { points: 300, question: "CHARACTERISTIC: This is the most common type of cloud coverage on Earth.", answer: "Stratocumulus" }
-                    ]
-                }
+            const encouragingPhrases = [
+                "You're doing great!",
+                "Keep it up!",
+                "You're a cloud expert!",
+                "I believe in you!",
+                "Awesome job!",
+                "You've got this!",
+                "Way to go!"
             ];
+
+            const gameData = [
+                { category: "Cirrus", clues: [ { points: 100, question: "SHAPE: Thin, wispy, and feathery, sometimes with a hooked look called 'mare's tails'.", answer: "Cirrus" }, { points: 200, question: "WEATHER: Usually indicates fair weather but can also be the first sign of an approaching storm.", answer: "Cirrus" }, { points: 300, question: "CHARACTERISTIC: These high-altitude clouds are made entirely of ice crystals.", answer: "Cirrus" } ] },
+                { category: "Cumulus", clues: [ { points: 100, question: "SHAPE: Puffy and like cotton balls, with flat bases and distinct outlines.", answer: "Cumulus" }, { points: 200, question: "WEATHER: Known as 'fair weather' clouds, they dot the sky on sunny days.", answer: "Cumulus" }, { points: 300, question: "CHARACTERISTIC: They are formed by rising warm air currents, a process called convection.", answer: "Cumulus" } ] },
+                { category: "Stratus", clues: [ { points: 100, question: "SHAPE: A gray, featureless, horizontal layer that can cover the entire sky.", answer: "Stratus" }, { points: 200, question: "WEATHER: Often brings overcast days with light drizzle or light snow.", answer: "Stratus" }, { points: 300, question: "CHARACTERISTIC: When this low-level cloud forms on the ground, it's called fog.", answer: "Stratus" } ] },
+                { category: "Cumulonimbus", clues: [ { points: 100, question: "SHAPE: A towering, dense cloud with a flat, spreading top known as an 'anvil'.", answer: "Cumulonimbus" }, { points: 200, question: "WEATHER: The king of storm clouds, it brings thunderstorms, heavy rain, and hail.", answer: "Cumulonimbus" }, { points: 300, question: "CHARACTERISTIC: This is the only cloud that produces both lightning and thunder.", answer: "Cumulonimbus" } ] },
+                { category: "Nimbostratus", clues: [ { points: 100, question: "SHAPE: A thick, dark gray, and featureless sheet that covers the sky.", answer: "Nimbostratus" }, { points: 200, question: "WEATHER: Produces steady, continuous light-to-moderate rain or snow.", answer: "Nimbostratus" }, { points: 300, question: "CHARACTERISTIC: Its name comes from 'nimbus,' the Latin word for rain.", answer: "Nimbostratus" } ] },
+                { category: "Altocumulus", clues: [ { points: 100, question: "SHAPE: White or grayish patches, often in layers or waves, looking like fish scales.", answer: "Altocumulus" }, { points: 200, question: "WEATHER: Seeing them on a warm morning can signal thunderstorms later in the day.", answer: "Altocumulus" }, { points: 300, question: "CHARACTERISTIC: These mid-level clouds are made of a mix of water droplets and ice crystals.", answer: "Altocumulus" } ] },
+                { category: "Altostratus", clues: [ { points: 100, question: "SHAPE: A uniform grayish or bluish sheet that partly or totally covers the sky.", answer: "Altostratus" }, { points: 200, question: "WEATHER: Often forms ahead of a storm that will produce continuous rain or snow.", answer: "Altostratus" }, { points: 300, question: "CHARACTERISTIC: The sun is often visible through it as if seen through ground glass.", answer: "Altostratus" } ] },
+                { category: "Cirrocumulus", clues: [ { points: 100, question: "SHAPE: Small, white patches arranged in ripples, creating a 'mackerel sky'.", answer: "Cirrocumulus" }, { points: 200, question: "WEATHER: They don't produce rain but can indicate a change in weather is coming.", answer: "Cirrocumulus" }, { points: 300, question: "CHARACTERISTIC: These are high-altitude clouds composed of ice crystals and are relatively rare.", answer: "Cirrocumulus" } ] },
+                { category: "Cirrostratus", clues: [ { points: 100, question: "SHAPE: A thin, transparent, sheet-like cloud that can cover the entire sky.", answer: "Cirrostratus" }, { points: 200, question: "WEATHER: Its presence often indicates that rain will arrive within 24 hours.", answer: "Cirrostratus" }, { points: 300, question: "CHARACTERISTIC: This cloud is famous for creating a halo effect around the sun or moon.", answer: "Cirrostratus" } ] },
+                { category: "Stratocumulus", clues: [ { points: 100, question: "SHAPE: Low, lumpy layers or patches of clouds with blue sky visible between them.", answer: "Stratocumulus" }, { points: 200, question: "WEATHER: Usually doesn't bring precipitation, or at most, some light drizzle.", answer: "Stratocumulus" }, { points: 300, question: "CHARACTERISTIC: This is the most common type of cloud coverage on Earth.", answer: "Stratocumulus" } ] }
+            ];
+            
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
 
             function setupBoard() {
                 gameBoard.innerHTML = '';
+                gameHeader.classList.remove('hidden');
+                gameBoard.classList.remove('hidden');
+                finalRoundModal.classList.add('hidden', 'opacity-0');
+                submitGuessesBtn.classList.remove('hidden');
+                document.getElementById('final-results-container').classList.add('hidden');
+
+                answeredQuestions = 0;
                 score = 0;
                 updateScore(0);
+                
+                shuffleArray(gameData);
 
-                gameData.forEach(cat => {
+                gameData.forEach((cat, index) => {
+                    const columnContainer = document.createElement('div');
+                    columnContainer.className = 'jeopardy-column flex flex-col gap-1 md:gap-2';
+                    columnContainer.dataset.category = cat.category;
+
                     const categoryDiv = document.createElement('div');
-                    categoryDiv.className = "text-center jeopardy-blue p-2 rounded-lg h-24 md:h-32 flex items-center justify-center";
-                    // This is the fix: removed lg:text-base to keep text size consistent
-                    categoryDiv.innerHTML = `<h2 class="category-header text-xs jeopardy-gold uppercase">${cat.category}</h2>`;
-                    gameBoard.appendChild(categoryDiv);
-                });
+                    categoryDiv.className = "category-handle text-center jeopardy-blue p-2 rounded-lg h-24 md:h-32 flex items-center justify-center";
+                    categoryDiv.innerHTML = `<h2 class="category-header text-xs md:text-sm jeopardy-gold uppercase">Mystery Cloud ${index + 1}</h2>`;
+                    columnContainer.appendChild(categoryDiv);
 
-                // Create clue cards, need to loop in point order
-                for (let i = 0; i < 3; i++) {
-                    gameData.forEach(cat => {
-                        const clue = cat.clues[i];
+                    cat.clues.forEach(clue => {
                         const clueDiv = document.createElement('div');
                         clueDiv.className = "clue-card-container text-center jeopardy-blue p-2 rounded-lg h-20 flex items-center justify-center cursor-pointer hover:bg-white/75 transition-all duration-200";
                         clueDiv.innerHTML = `<span class="points-text text-xl md:text-3xl">$${clue.points}</span>`;
@@ -233,26 +403,35 @@
                         clueDiv.dataset.answer = clue.answer;
                         clueDiv.dataset.points = clue.points;
                         clueDiv.addEventListener('click', handleClueClick);
-                        gameBoard.appendChild(clueDiv);
+                        columnContainer.appendChild(clueDiv);
                     });
+                    
+                    gameBoard.appendChild(columnContainer);
+                });
+            }
+            
+            function positionStickFigure() {
+                const columns = gameBoard.querySelectorAll('.jeopardy-column');
+                if (columns.length >= 5) {
+                    const fifthColumnHeader = columns[4].querySelector('.category-handle');
+                    if (fifthColumnHeader) {
+                        const rect = fifthColumnHeader.getBoundingClientRect();
+                        stickFigureContainer.style.top = `${window.scrollY + rect.top - stickFigureContainer.offsetHeight + 15}px`;
+                        stickFigureContainer.style.left = `${window.scrollX + rect.left + (rect.width / 2) - (stickFigureContainer.offsetWidth / 2)}px`;
+                        stickFigureContainer.classList.remove('hidden', 'opacity-0');
+                    }
                 }
             }
 
             function handleClueClick(event) {
                 const target = event.currentTarget;
                 if (target.classList.contains('answered')) return;
-
                 activeClueElement = target;
                 currentPoints = parseInt(target.dataset.points);
-
                 questionText.textContent = target.dataset.question;
                 answerText.textContent = `What is ${target.dataset.answer}?`;
-
                 questionModal.classList.remove('hidden');
-                setTimeout(() => {
-                    questionModal.classList.remove('opacity-0');
-                }, 10); // small delay to allow transition
-
+                setTimeout(() => questionModal.classList.remove('opacity-0'), 10);
                 answerSection.classList.add('hidden');
                 revealAnswerBtn.classList.remove('hidden');
             }
@@ -272,29 +451,105 @@
                         activeClueElement.classList.add('answered', 'bg-sky-200/50', 'cursor-not-allowed', 'opacity-60');
                         activeClueElement.classList.remove('hover:bg-white/75');
                         activeClueElement.removeEventListener('click', handleClueClick);
+                        answeredQuestions++;
+                        if (answeredQuestions === TOTAL_QUESTIONS) {
+                            startFinalRound();
+                        }
                     }
-                }, 300); // match transition duration
+                }, 300);
             }
+
+            function startFinalRound() {
+                gameHeader.classList.add('hidden');
+                gameBoard.classList.add('hidden');
+                stickFigureContainer.classList.add('hidden', 'opacity-0');
+                finalRoundModal.classList.remove('hidden');
+                setTimeout(() => finalRoundModal.classList.remove('opacity-0'), 10);
+
+                finalInputsContainer.innerHTML = '';
+                const currentColumns = document.querySelectorAll('.jeopardy-column');
+                currentColumns.forEach((col, index) => {
+                    const inputGroup = document.createElement('div');
+                    inputGroup.className = 'flex flex-col items-center';
+                    inputGroup.innerHTML = `
+                        <label for="guess-${index}" class="font-bold mb-1">Cloud ${index + 1}</label>
+                        <input type="text" id="guess-${index}" data-answer="${col.dataset.category}" class="text-center">
+                    `;
+                    finalInputsContainer.appendChild(inputGroup);
+                });
+            }
+
+            function checkFinalGuesses() {
+                const inputs = finalInputsContainer.querySelectorAll('input');
+                let correctGuesses = 0;
+                inputs.forEach(input => {
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const correctAnswer = input.dataset.answer.toLowerCase();
+                    const resultSpan = document.createElement('p');
+                    resultSpan.className = 'text-center text-sm mt-1';
+
+                    if (userAnswer === correctAnswer) {
+                        input.classList.add('correct');
+                        correctGuesses++;
+                    } else {
+                        input.classList.add('incorrect');
+                        resultSpan.innerHTML = `Correct: <span class="font-bold">${input.dataset.answer}</span>`;
+                        input.parentElement.appendChild(resultSpan);
+                    }
+                    input.disabled = true;
+                });
+                
+                const bonusPoints = correctGuesses * 500;
+                updateScore(bonusPoints);
+                submitGuessesBtn.classList.add('hidden');
+                gameHeader.classList.remove('hidden');
+            }
+            
+            function handleStartGame() {
+                startScreen.classList.add('opacity-0');
+                setTimeout(() => {
+                    startScreen.classList.add('hidden');
+                }, 1000); // Match duration of transition
+
+                gameHeader.classList.remove('hidden');
+                gameBoard.classList.remove('hidden');
+                setTimeout(() => {
+                    gameHeader.classList.remove('opacity-0');
+                    gameBoard.classList.remove('opacity-0');
+                    positionStickFigure();
+                }, 100);
+            }
+
+            function showEncouragement() {
+                const randomIndex = Math.floor(Math.random() * encouragingPhrases.length);
+                speechBubble.textContent = encouragingPhrases[randomIndex];
+                speechBubble.classList.add('show');
+                setTimeout(() => {
+                    speechBubble.classList.remove('show');
+                }, 2000); // Hide after 2 seconds
+            }
+
+            // --- Event Listeners ---
+            startGameButton.addEventListener('click', handleStartGame);
+            stickFigureContainer.addEventListener('click', showEncouragement);
+            window.addEventListener('resize', positionStickFigure);
 
             revealAnswerBtn.addEventListener('click', () => {
                 answerSection.classList.remove('hidden');
                 revealAnswerBtn.classList.add('hidden');
             });
-
-            correctBtn.addEventListener('click', () => {
-                updateScore(currentPoints);
-                closeModal();
-            });
-
-            incorrectBtn.addEventListener('click', () => {
-                updateScore(-currentPoints);
-                closeModal();
-            });
-            
+            correctBtn.addEventListener('click', () => { updateScore(currentPoints); closeModal(); });
+            incorrectBtn.addEventListener('click', () => { updateScore(-currentPoints); closeModal(); });
             closeModalBtn.addEventListener('click', closeModal);
-            resetButton.addEventListener('click', setupBoard);
+            resetButton.addEventListener('click', () => {
+                 startScreen.classList.remove('hidden', 'opacity-0');
+                 gameHeader.classList.add('hidden', 'opacity-0');
+                 gameBoard.classList.add('hidden', 'opacity-0');
+                 stickFigureContainer.classList.add('hidden', 'opacity-0');
+                 setupBoard();
+            });
+            submitGuessesBtn.addEventListener('click', checkFinalGuesses);
 
-            // Initial setup
             setupBoard();
         });
     </script>

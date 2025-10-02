@@ -412,10 +412,10 @@
             
             function positionStickFigure() {
                 const columns = gameBoard.querySelectorAll('.jeopardy-column');
-                if (columns.length >= 5) {
-                    const fifthColumnHeader = columns[4].querySelector('.category-handle');
-                    if (fifthColumnHeader) {
-                        const rect = fifthColumnHeader.getBoundingClientRect();
+                if (columns.length > 0) {
+                    const firstColumnHeader = columns[0].querySelector('.category-handle');
+                    if (firstColumnHeader) {
+                        const rect = firstColumnHeader.getBoundingClientRect();
                         stickFigureContainer.style.top = `${window.scrollY + rect.top - stickFigureContainer.offsetHeight + 15}px`;
                         stickFigureContainer.style.left = `${window.scrollX + rect.left + (rect.width / 2) - (stickFigureContainer.offsetWidth / 2)}px`;
                         stickFigureContainer.classList.remove('hidden', 'opacity-0');

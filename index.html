@@ -416,7 +416,7 @@
                     const firstColumnHeader = columns[0].querySelector('.category-handle');
                     if (firstColumnHeader) {
                         const rect = firstColumnHeader.getBoundingClientRect();
-                        stickFigureContainer.style.top = `${window.scrollY + rect.top - stickFigureContainer.offsetHeight + 15}px`;
+                        stickFigureContainer.style.top = `${window.scrollY + rect.top - stickFigureContainer.offsetHeight}px`;
                         stickFigureContainer.style.left = `${window.scrollX + rect.left + (rect.width / 2) - (stickFigureContainer.offsetWidth / 2)}px`;
                         stickFigureContainer.classList.remove('hidden', 'opacity-0');
                     }
